@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Animation Example</title>
+    <title>CSS Animations and localStorage Example</title>
     <style>
+        /* General Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+
         /* Button Style */
         .animated-button {
             padding: 10px 20px;
@@ -22,11 +29,71 @@
             transform: scale(1.1); /* Scale up on hover */
             background-color: #45a049; /* Darken the background */
         }
+
+        /* Color Change Buttons */
+        .color-button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        /* Keyframe animation for the button */
+        @keyframes buttonAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Active Animation */
+        .active-animation {
+            animation: buttonAnimation 1s ease-in-out;
+        }
+
     </style>
 </head>
 <body>
 
-<button class="animated-button">Hover Me!</button>
+    <h1>CSS Animations and localStorage Example</h1>
+
+    <!-- Buttons to change background color -->
+    <h2>Choose Background Color:</h2>
+    <button class="color-button" style="background-color: lightblue;" onclick="changeColor('lightblue')">Light Blue</button>
+    <button class="color-button" style="background-color: lightgreen;" onclick="changeColor('lightgreen')">Light Green</button>
+    <button class="color-button" style="background-color: lightcoral;" onclick="changeColor('lightcoral')">Light Coral</button>
+
+    <hr>
+
+    <!-- Animation Button -->
+    <h2>Click the Button to Trigger Animation:</h2>
+    <button class="animated-button" onclick="animateButton(this)">Click Me!</button>
+
+    <script>
+        // Function to change background color and store preference in localStorage
+        function changeColor(color) {
+            document.body.style.backgroundColor = color;
+            localStorage.setItem('bgColor', color); // Store the selected color
+        }
+
+        // Retrieve the stored color preference on page load
+        window.onload = function() {
+            const savedColor = localStorage.getItem('bgColor');
+            if (savedColor) {
+                document.body.style.backgroundColor = savedColor; // Apply saved color
+            }
+        }
+
+        // Function to trigger animation when the button is clicked
+        function animateButton(button) {
+            // Add the animation class to the button
+            button.classList.add('active-animation');
+
+            // Remove the animation class after it completes
+            setTimeout(() => {
+                button.classList.remove('active-animation');
+            }, 1000); // 1 second (duration of animation)
+        }
+    </script>
 
 </body>
 </html>
